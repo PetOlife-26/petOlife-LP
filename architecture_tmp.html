@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>architecture.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%F0%9F%8F%97-new-petolife-homepage-architecture">🏗 NEW PETOLIFE HOMEPAGE ARCHITECTURE</h1>
+<h3 id="design-theme">Design Theme:</h3>
+<p><strong>&quot;The Digital Identity Layer for Every Pet&quot;</strong></p>
+<p>Visual Direction:</p>
+<ul>
+<li>Warm Healthcare Tech</li>
+<li>Modern Infrastructure Startup</li>
+<li>Pet-first Emotional Design</li>
+<li>Apple Health × Stripe × Notion Simplicity</li>
+<li>Premium whitespace</li>
+<li>Rounded ecosystem-inspired UI</li>
+</ul>
+<p>Color system derived from PetOlife branding:</p>
+<h3 id="light-mode">Light Mode</h3>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Background</td>
+<td>#FAFAF7</td>
+</tr>
+<tr>
+<td>Primary</td>
+<td>#005F63</td>
+</tr>
+<tr>
+<td>Accent</td>
+<td>#8CC63F</td>
+</tr>
+<tr>
+<td>Soft Sections</td>
+<td>#DFF5E3</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>#111827</td>
+</tr>
+<tr>
+<td>Secondary Text</td>
+<td>#6B7280</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dark-mode">Dark Mode</h3>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Background</td>
+<td>#0F172A</td>
+</tr>
+<tr>
+<td>Surface</td>
+<td>#111827</td>
+</tr>
+<tr>
+<td>Cards</td>
+<td>#1E293B</td>
+</tr>
+<tr>
+<td>Accent</td>
+<td>#8CC63F</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>#F8FAFC</td>
+</tr>
+</tbody>
+</table>
+<p>Following the exact emotional design philosophy from the visual document: calm, trustworthy, caring, modern infrastructure.</p>
+<hr>
+<h1 id="section-1--floating-smart-navbar">SECTION 1 — FLOATING SMART NAVBAR</h1>
+<h3 id="layout">Layout</h3>
+<pre class="hljs"><code><div>[PetOlife Logo]
+
+Product
+How It Works
+Pet Identity
+For Vets
+Coming Soon
+
+                [Dark Mode Toggle]
+                [Create Pet ID]
+</div></code></pre>
+<h3 id="behaviors">Behaviors</h3>
+<ul>
+<li>Transparent on load</li>
+<li>Soft glass blur on scroll</li>
+<li>Active section indicator</li>
+<li>Tiny paw hover animation</li>
+<li>Mobile hamburger drawer</li>
+</ul>
+<h3 id="cta">CTA</h3>
+<pre class="hljs"><code><div>Create Pet ID
+</div></code></pre>
+<p>Pill-shaped</p>
+<p>Accent Green</p>
+<p>Hover:</p>
+<ul>
+<li>subtle glow</li>
+<li>slight upward lift</li>
+</ul>
+<hr>
+<h1 id="section-2--hero-complete-redesign">SECTION 2 — HERO (COMPLETE REDESIGN)</h1>
+<h3 id="goal">Goal</h3>
+<p>Immediately answer:</p>
+<p><strong>&quot;Why does a pet need a digital identity?&quot;</strong></p>
+<hr>
+<h2 id="layout">Layout</h2>
+<h3 id="left-column-conversion-engine">LEFT COLUMN (Conversion Engine)</h3>
+<hr>
+<h3 id="tagline">Tagline</h3>
+<p>🐾</p>
+<h1 id="every-pet-deserves-a-digital-identity">Every Pet Deserves A Digital Identity</h1>
+<p>Handwritten style font</p>
+<p>(Kalam / Patrick Hand)</p>
+<hr>
+<h3 id="supporting-text">Supporting Text</h3>
+<p>A unified identity connecting pets, owners, veterinarians and future pet services through trusted lifelong records.</p>
+<hr>
+<h3 id="audience-switch">Audience Switch</h3>
+<p>Equal Width Capsule Buttons</p>
+<pre class="hljs"><code><div>[ For Pet Owners ]
+[ For Veterinarians ]
+</div></code></pre>
+<p>Behavior:</p>
+<p>Owner selected:</p>
+<ul>
+<li>messaging focuses on pet care</li>
+</ul>
+<p>Vet selected:</p>
+<ul>
+<li>messaging focuses on medical records</li>
+<li>clinic efficiency</li>
+</ul>
+<p>No page reload.</p>
+<hr>
+<h3 id="authentication-container">Authentication Container</h3>
+<p>Large rounded card.</p>
+<h4 id="option-1">Option 1</h4>
+<pre class="hljs"><code><div>Continue with Google
+</div></code></pre>
+<p>Primary CTA</p>
+<hr>
+<h4 id="divider">Divider</h4>
+<pre class="hljs"><code><div>or
+</div></code></pre>
+<hr>
+<h4 id="option-2">Option 2</h4>
+<p>Username</p>
+<p>Password</p>
+<pre class="hljs"><code><div>[ Login ]
+[ Register ]
+</div></code></pre>
+<hr>
+<h3 id="legal-note">Legal Note</h3>
+<p>Small muted text</p>
+<pre class="hljs"><code><div>By continuing you agree to
+Terms of Service
+and Privacy Policy.
+</div></code></pre>
+<hr>
+<h2 id="right-column-interactive-story-carousel">RIGHT COLUMN (Interactive Story Carousel)</h2>
+<p>Instead of showing random app screenshots.</p>
+<p>We show:</p>
+<h3 id="product-narrative-slides">Product Narrative Slides</h3>
+<hr>
+<h3 id="slide-1">Slide 1</h3>
+<p>Problem</p>
+<p>Visual:</p>
+<p>Pet records scattered across:</p>
+<ul>
+<li>Vet A</li>
+<li>Vet B</li>
+<li>Emergency Hospital</li>
+<li>Groomer</li>
+</ul>
+<p>Broken connections</p>
+<p>Heading:</p>
+<pre class="hljs"><code><div>Pet care is fragmented.
+</div></code></pre>
+<hr>
+<h3 id="slide-2">Slide 2</h3>
+<p>Pet Identity</p>
+<p>Visual:</p>
+<p>Single Pet Identity Card</p>
+<p>Connected to all records.</p>
+<p>Heading:</p>
+<pre class="hljs"><code><div>One pet.
+One identity.
+Lifetime access.
+</div></code></pre>
+<hr>
+<h3 id="slide-3">Slide 3</h3>
+<p>How It Works</p>
+<p>Visual:</p>
+<pre class="hljs"><code><div>Create
+Connect
+Access
+</div></code></pre>
+<p>simple flow animation</p>
+<hr>
+<h3 id="slide-4">Slide 4</h3>
+<p>Emergency Access</p>
+<p>Visual:</p>
+<p>Phone QR scan</p>
+<p>Medical profile appears</p>
+<p>Heading:</p>
+<pre class="hljs"><code><div>Information when it matters most.
+</div></code></pre>
+<hr>
+<h3 id="slide-5">Slide 5</h3>
+<p>Future Ecosystem</p>
+<p>Connected network graph</p>
+<p>Pet Identity at center</p>
+<p>Heading:</p>
+<pre class="hljs"><code><div>Building the future of connected pet care.
+</div></code></pre>
+<hr>
+<h3 id="carousel-controls">Carousel Controls</h3>
+<p>Bottom Center</p>
+<pre class="hljs"><code><div>◀  ● ● ● ● ● ▶
+</div></code></pre>
+<p>Auto-scroll every 5 seconds.</p>
+<hr>
+<h1 id="section-3--the-problem">SECTION 3 — THE PROBLEM</h1>
+<p>(Replaces Current Features Section)</p>
+<hr>
+<h2 id="heading">Heading</h2>
+<h1 id="pet-care-shouldnt-be-scattered">Pet Care Shouldn't Be Scattered</h1>
+<p>Subheading:</p>
+<p>Yet today, every clinic, vaccination record, treatment history, and emergency visit exists in separate systems.</p>
+<hr>
+<h2 id="layout">Layout</h2>
+<h3 id="before-petolife">Before PetOlife</h3>
+<p>Interactive fragmentation map.</p>
+<pre class="hljs"><code><div>Vet Clinic A
+      ↘
+
+Groomer → Pet
+
+Emergency Hospital
+
+Vaccination Center
+</div></code></pre>
+<p>Broken links</p>
+<p>Disconnected cards</p>
+<p>Muted colors</p>
+<hr>
+<h3 id="scroll-animation">Scroll Animation</h3>
+<p>Cards drift apart</p>
+<p>Missing records appear</p>
+<p>Lost history warning appears</p>
+<hr>
+<h3 id="transition">Transition</h3>
+<p>Everything merges</p>
+<p>Lines animate inward</p>
+<hr>
+<h3 id="after-petolife">After PetOlife</h3>
+<p>Large central identity card</p>
+<pre class="hljs"><code><div>🐾 Pet Identity
+</div></code></pre>
+<p>Connected everywhere</p>
+<hr>
+<h3 id="statistics-strip">Statistics Strip</h3>
+<pre class="hljs"><code><div>Scattered Records
+Missing History
+Emergency Delays
+Manual Verification
+</div></code></pre>
+<hr>
+<p>Psychological effect:</p>
+<p>&quot;Why doesn't this already exist?&quot;</p>
+<p>Exactly matching the wireframe objective.</p>
+<hr>
+<h1 id="section-4--what-is-a-pet-identity">SECTION 4 — WHAT IS A PET IDENTITY?</h1>
+<p>(Replaces Pricing)</p>
+<hr>
+<h2 id="heading">Heading</h2>
+<h1 id="a-lifetime-record-for-every-pet">A Lifetime Record For Every Pet</h1>
+<hr>
+<h3 id="layout">Layout</h3>
+<p>3 Premium Cards</p>
+<hr>
+<h3 id="card-1">Card 1</h3>
+<p>📋 Medical Timeline</p>
+<p>Visual:</p>
+<p>Timeline illustration</p>
+<p>Description:</p>
+<p>Every vaccine, treatment, surgery and checkup securely stored in one place.</p>
+<hr>
+<h3 id="card-2">Card 2</h3>
+<p>🚨 Emergency Access</p>
+<p>Visual:</p>
+<p>QR Scan</p>
+<p>Description:</p>
+<p>Critical information instantly available during emergencies.</p>
+<hr>
+<h3 id="card-3">Card 3</h3>
+<p>🌐 Connected Ecosystem</p>
+<p>Visual:</p>
+<p>Network graph</p>
+<p>Description:</p>
+<p>Connect veterinarians, shelters, owners and future pet services.</p>
+<hr>
+<h3 id="expandable-micro-details">Expandable Micro Details</h3>
+<p>Clicking card opens:</p>
+<p>mini modal</p>
+<p>showing:</p>
+<ul>
+<li>sample timeline</li>
+<li>QR scan example</li>
+<li>ecosystem diagram</li>
+</ul>
+<hr>
+<h1 id="section-5--how-it-works">SECTION 5 — HOW IT WORKS</h1>
+<p>(Replaces Video Section)</p>
+<hr>
+<h2 id="heading">Heading</h2>
+<h1 id="built-to-be-effortless">Built To Be Effortless</h1>
+<h3 id="visual-layout">Visual Layout</h3>
+<p>Large horizontal timeline</p>
+<hr>
+<h2 id="step-1">Step 1</h2>
+<h3 id="create-identity">Create Identity</h3>
+<p>Visual:</p>
+<p>Pet registration form</p>
+<p>Fields:</p>
+<ul>
+<li>Name</li>
+<li>Breed</li>
+<li>Photo</li>
+</ul>
+<hr>
+<h2 id="step-2">Step 2</h2>
+<h3 id="connect-care">Connect Care</h3>
+<p>Visual:</p>
+<p>Records syncing</p>
+<p>Clinic → Identity</p>
+<p>Vaccines → Identity</p>
+<p>Medical Timeline updating</p>
+<hr>
+<h2 id="step-3">Step 3</h2>
+<h3 id="access-anywhere">Access Anywhere</h3>
+<p>Visual:</p>
+<p>QR code scan</p>
+<p>Identity appears instantly</p>
+<hr>
+<h3 id="interaction">Interaction</h3>
+<p>Each step animates while scrolling.</p>
+<p>Current step glows.</p>
+<p>Previous steps become verified.</p>
+<hr>
+<h3 id="mobile">Mobile</h3>
+<p>Transforms into swipeable cards.</p>
+<hr>
+<h1 id="section-6--coming-soon">SECTION 6 — COMING SOON</h1>
+<p>(New Vision Section)</p>
+<p>Instead of boring feature cards.</p>
+<p>Use:</p>
+<h3 id="ecosystem-galaxy">Ecosystem Galaxy</h3>
+<p>Center:</p>
+<pre class="hljs"><code><div>🐾 Pet Identity
+</div></code></pre>
+<p>Around it floating ecosystem nodes.</p>
+<hr>
+<h3 id="interactive-nodes">Interactive Nodes</h3>
+<p>🤖 AI Pet Assistant</p>
+<p>📈 Smart Health Predictions</p>
+<p>👥 Community Features</p>
+<p>🐾 Pet Networking</p>
+<p>🛒 Marketplace</p>
+<p>🛡 Insurance Integrations</p>
+<p>✈ Pet Travel Passport</p>
+<p>🏥 Cross-Clinic Data Infrastructure</p>
+<hr>
+<p>Hover Node:</p>
+<p>Expands</p>
+<p>Shows:</p>
+<pre class="hljs"><code><div>Launching Soon
+</div></code></pre>
+<p>with mini description.</p>
+<hr>
+<h3 id="section-heading">Section Heading</h3>
+<h1 id="building-the-future-of-connected-pet-care">Building The Future Of Connected Pet Care</h1>
+<p>Subheading:</p>
+<p>Pet identity is just the beginning.</p>
+<hr>
+<h1 id="section-7--trust--security">SECTION 7 — TRUST &amp; SECURITY</h1>
+<hr>
+<h2 id="heading">Heading</h2>
+<h1 id="trust-is-built-into-the-infrastructure">Trust Is Built Into The Infrastructure</h1>
+<hr>
+<h3 id="three-trust-cards">Three Trust Cards</h3>
+<hr>
+<p>🔒 Encrypted Records</p>
+<p>Medical-grade security</p>
+<hr>
+<p>👤 Owner Controlled Access</p>
+<p>You decide who sees what.</p>
+<hr>
+<p>✅ Verified Veterinarians</p>
+<p>Only trusted professionals can update records.</p>
+<hr>
+<p>Hover:</p>
+<p>Tooltip explanations</p>
+<p>Soft green glow</p>
+<hr>
+<h1 id="section-8--final-cta">SECTION 8 — FINAL CTA</h1>
+<p>Massive conversion section.</p>
+<hr>
+<p>Background:</p>
+<p>Soft gradient</p>
+<p>Animated PetOlife logo</p>
+<hr>
+<h3 id="headline">Headline</h3>
+<h1 id="a-lifetime-of-care-starts-with-identity">A Lifetime Of Care Starts With Identity</h1>
+<hr>
+<h3 id="supporting-text">Supporting Text</h3>
+<p>Join the next generation of trusted pet care infrastructure.</p>
+<hr>
+<p>Buttons</p>
+<pre class="hljs"><code><div>Create Pet ID
+</div></code></pre>
+<pre class="hljs"><code><div>Partner As A Veterinarian
+</div></code></pre>
+<hr>
+<p>Very subtle paw-confetti animation.</p>
+<hr>
+<h1 id="section-9--footer">SECTION 9 — FOOTER</h1>
+<hr>
+<h2 id="left-column">Left Column</h2>
+<h3 id="petolife">PetOlife</h3>
+<p>Standing with pets and pet lovers.</p>
+<p>Building the world's most trusted pet infrastructure.</p>
+<hr>
+<h2 id="product">Product</h2>
+<ul>
+<li>How It Works</li>
+<li>Features</li>
+<li>Ecosystem</li>
+<li>Early Access</li>
+</ul>
+<hr>
+<h2 id="company">Company</h2>
+<ul>
+<li>About</li>
+<li>Blog</li>
+<li>Careers</li>
+<li>Contact</li>
+</ul>
+<hr>
+<h2 id="for-vets">For Vets</h2>
+<ul>
+<li>Partner Program</li>
+<li>API Docs</li>
+<li>Dashboard</li>
+<li>Pricing</li>
+</ul>
+<hr>
+<h2 id="bottom-bar">Bottom Bar</h2>
+<pre class="hljs"><code><div>© 2025 PetOlife Technologies Pvt. Ltd.
+All rights reserved.
+</div></code></pre>
+<p>Links:</p>
+<ul>
+<li>Privacy</li>
+<li>Terms</li>
+<li>Cookies</li>
+</ul>
+<p>Right Side:</p>
+<p>Social icons</p>
+<ul>
+<li>LinkedIn</li>
+<li>X</li>
+<li>Instagram</li>
+<li>GitHub</li>
+</ul>
+<hr>
+
+</body>
+</html>
