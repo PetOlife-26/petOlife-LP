@@ -272,6 +272,7 @@
 /* Login/Register form (hidden by default, toggled) */
 .auth-form-panel {
   width: 100%;
+  margin-top: 8px;
   animation: slideDown 0.3s ease;
 }
 

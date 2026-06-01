@@ -95,7 +95,8 @@ export async function registerUser(data) {
   store.users.push(newUser);
   console.log("[Store] User registered:", newUser.username, "| Total users:", store.users.length);
 
-  const { password: _pw, ...safeUser } = newUser;
+  const safeUser = { ...newUser };
+  delete safeUser.password;
   return {
     success: true,
     message: `Welcome to PetOlife, ${newUser.username}! Your account has been created.`,
@@ -125,7 +126,8 @@ export async function loginUser(username, password) {
   }
 
   console.log("[Store] User logged in:", user.username);
-  const { password: _pw, ...safeUser } = user;
+  const safeUser = { ...user };
+  delete safeUser.password;
   return {
     success: true,
     message: `Welcome back, ${user.username}!`,

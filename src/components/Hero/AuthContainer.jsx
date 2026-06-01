@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { loginUser, registerUser, googleAuth } from "../../api/endpoints";
 
 export default function AuthContainer() {
-  const [showForm, setShowForm] = useState(false);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ export default function AuthContainer() {
     try {
       const result = await googleAuth();
       setMessage(result.message);
-    } catch (e) {
+    } catch {
       setMessage("Google Auth is not yet available.");
     }
     setLoading(false);
@@ -32,7 +32,7 @@ export default function AuthContainer() {
       try {
         const result = await loginUser(username, password);
         setMessage(result.message);
-      } catch (e) {
+      } catch {
         setMessage("Login is not yet available.");
       }
       setLoading(false);
@@ -56,7 +56,7 @@ export default function AuthContainer() {
           role: "owner",
         });
         setMessage(result.message);
-      } catch (e) {
+      } catch {
         setMessage("Registration is not yet available.");
       }
       setLoading(false);
@@ -95,82 +95,48 @@ export default function AuthContainer() {
       </button>
 
 
-      {!showForm ? (
-        /* Stacked buttons */
-        <div className="auth-stacked-buttons">
-          <button
-            className="auth-stacked-btn"
-            onClick={() => setShowForm(true)}
-            id="auth-email-btn"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
-            Continue with Email
-          </button>
-          <button
-            className="auth-stacked-btn"
-            onClick={() => setShowForm(true)}
-            id="auth-phone-btn"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
-              <path d="M12 18h.01" />
-            </svg>
-            Continue with Phone
-          </button>
-        </div>
-      ) : (
-        /* Login / Register Form */
-        <div className="auth-form-panel">
-          <form className="auth-form" onSubmit={handleLogin}>
-            <input
-              className="auth-input"
-              type="text"
-              placeholder="Username or Email"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              id="auth-username"
-              autoComplete="username"
-            />
-            <input
-              className="auth-input"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id="auth-password"
-              autoComplete="current-password"
-            />
-            <div className="auth-buttons">
-              <button
-                type="submit"
-                className="auth-btn-login"
-                disabled={loading}
-                id="auth-login-btn"
-              >
-                {loading ? "..." : "Login"}
-              </button>
-              <button
-                type="button"
-                className="auth-btn-register"
-                onClick={handleRegister}
-                disabled={loading}
-                id="auth-register-btn"
-              >
-                Register
-              </button>
-            </div>
-          </form>
-          <button
-            className="auth-form-back"
-            onClick={() => setShowForm(false)}
-          >
-            ← Back to options
-          </button>
-        </div>
-      )}
+      {/* Login / Register Form */}
+      <div className="auth-form-panel">
+        <form className="auth-form" onSubmit={handleLogin} autoComplete="off">
+          <input
+            className="auth-input"
+            type="text"
+            placeholder="Username or Email"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            id="auth-username"
+            autoComplete="off"
+          />
+          <input
+            className="auth-input"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            id="auth-password"
+            autoComplete="new-password"
+          />
+          <div className="auth-buttons">
+            <button
+              type="submit"
+              className="auth-btn-login"
+              disabled={loading}
+              id="auth-login-btn"
+            >
+              {loading ? "..." : "Login"}
+            </button>
+            <button
+              type="button"
+              className="auth-btn-register"
+              onClick={handleRegister}
+              disabled={loading}
+              id="auth-register-btn"
+            >
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
 
       {/* Status Message */}
       {message && <p className="auth-message">{message}</p>}
