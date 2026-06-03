@@ -1,9 +1,9 @@
 # PetOlife — Form Submission Infrastructure
 
 **Contributor:** Akash M S  
-**Scope:** Individual contribution — serverless form & email handling layer  
+**Scope:** — serverless form & email handling layer  
 **Stack:** Google Apps Script · Google Sheets · React (Vite)  
-**Deployment target:** GitHub Pages (static) — no backend server required
+**Deployment target:** GitHub Pages (static) 
 
 ---
 
@@ -16,7 +16,6 @@ This contribution sets up the complete **data collection and email notification 
 GitHub Pages only serves static files. There is no server to run Node.js, handle POST requests, or write to a database. The solution needed to be:
 
 - ✅ Free (prototype stage)
-- ✅ Serverless — no backend to deploy or maintain
 - ✅ Secure — no credentials exposed in frontend code
 - ✅ Immediately useful — team can view leads without a dashboard
 - ✅ Drop-in replaceable when a real backend is built later
@@ -25,11 +24,6 @@ GitHub Pages only serves static files. There is no server to run Node.js, handle
 
 ## Architecture Decision
 
-| Option | Verdict | Reason |
-|---|---|---|
-| JSON file in repo | ❌ Rejected | Exposes user data in public codebase |
-| Airtable API | ❌ Rejected | API key must live in frontend (security risk); paid after 1k records |
-| Formspree | ⚠️ Skipped | Less control; harder to extend |
 | **Google Apps Script** | ✅ **Chosen** | Runs on Google's servers, no key in frontend, free forever, emails built-in |
 
 ---
@@ -74,31 +68,9 @@ The Google Script URL is the only "secret" — it lives in `.env` locally and as
 
 ### Step 1 — Create the Google Sheet
 
-1. Go to [sheets.google.com](https://sheets.google.com) and create a new spreadsheet
-2. Name it: **PetOlife Leads** (or anything you like)
-3. Leave it empty — the script creates the header row automatically on first submission
-
 ### Step 2 — Open Apps Script
 
-1. In the Google Sheet: click **Extensions → Apps Script**
-2. Delete all existing code in the editor
-3. Paste the entire contents of `google-apps-script/Code.gs`
-4. Click **Save** (💾) — name the project `PetOlife-FormHandler`
-
 ### Step 3 — Deploy as Web App
-
-1. Click **Deploy → New Deployment**
-2. Click the gear ⚙️ next to "Type" → select **Web App**
-3. Fill in:
-   - **Description:** `PetOlife form handler v1`
-   - **Execute as:** `Me`
-   - **Who has access:** `Anyone`
-4. Click **Deploy**
-5. Authorize the permissions when prompted (this lets the script write to Sheets and send email)
-6. **Copy the Web App URL** — it looks like:
-   ```
-   https://script.google.com/macros/s/AKfycb.../exec
-   ```
 
 ### Step 4 — Configure the Frontend
 
@@ -199,11 +171,7 @@ The URL stays the same — no frontend changes needed.
 
 ---
 
-## Handoff Notes for the Team
 
-- **To view leads:** Open the Google Sheet (ask Akash for access or share it to the team Google account)
-- **To add a new form type:** Add a call in `endpoints.js` using `postToSheet()`, pass a new `type` string — it auto-saves with the right label in Sheets
-- **Production migration:** When the real Node.js/Express backend is ready, replace `VITE_GOOGLE_SCRIPT_URL` with the real API endpoint. `endpoints.js` interface stays identical — zero component changes needed.
 
 ---
 
