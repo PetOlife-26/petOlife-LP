@@ -1,0 +1,152 @@
+/* SECTION */
+.features-section {
+  background: #f2fbf6;
+  padding: 80px 20px;
+}
+.highlight-green {
+  color: #015b56;
+}
+
+/* CONTAINER */
+.features-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* TITLE */
+.features-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 50px;
+}
+
+/* GRID */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* CARD */
+.feature-card {
+  position: relative;
+  height: 320px;
+  perspective: 1000px;
+}
+
+/* FRONT & BACK COMMON */
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 25px;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FRONT */
+.card-front {
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.card-front img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.card-front h3 {
+  color: #015b56;
+  margin-bottom: 10px;
+}
+
+/* BACK */
+.card-back {
+  background: #015b56;
+  color: white;
+  transform: rotateY(180deg);
+  text-align: center;
+}
+
+/* FLIP EFFECT */
+.feature-card:hover .card-front {
+  transform: rotateY(180deg);
+}
+
+.feature-card:hover .card-back {
+  transform: rotateY(360deg);
+}
+
+/* BUTTON */
+.card-back button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: white;
+  color: #015b56;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-box button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+/* Tablet */
+@media (max-width: 992px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .features-title {
+    font-size: 24px;
+  }
+
+  .feature-card {
+    height: 300px;
+  }
+}

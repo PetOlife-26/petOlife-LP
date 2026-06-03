@@ -1,0 +1,166 @@
+/* Container Framework */
+:root {
+  --primary-color: #015b56;
+}
+.pet-journey-section {
+  padding: 4rem 1.5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #111827;
+  background-color: #ffffff;
+}
+
+.pet-journey-container {
+  max-w: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Spacing between the rows */
+}
+
+/* Header Typography styling */
+.pet-journey-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.main-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
+}
+
+.highlight-text {
+  color: #2e7d32; /* Mid-tone accent green */
+}
+
+.main-subtitle {
+  font-size: 1.125rem;
+  color: #1f2937;
+  font-weight: 600;
+  max-w: 750px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Row-by-Row Section Block Engine */
+.journey-row {
+  display: flex;
+  flex-direction: column; /* Stacked layout by default on mobile devices */
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  overflow: hidden;
+}
+
+/* Individualized Section Color Schemes matching the picture gradient fields */
+.bg-green-tint {
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+}
+
+.bg-white-tint {
+  background-color: #ffffff;
+  border: 1px solid #f3f4f6;
+}
+
+.bg-purple-tint {
+  background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
+}
+
+/* Structural typography blocks inside the cards */
+.journey-content-column {
+  flex: 1;
+  width: 100%;
+}
+
+.journey-image-column {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.journey-card-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.journey-card-description {
+  font-size: 1.125rem;
+  color: #374151;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-w: 520px;
+  font-weight: 500;
+}
+
+/* Button UI Rules */
+.journey-btn {
+  padding: 0.75rem 1.75rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.green-btn {
+  background-color: #388e3c;
+  color: #ffffff;
+}
+
+.green-btn:hover {
+  background-color: #2e7d32;
+}
+
+.dark-green-btn {
+  background-color: #1b5e20;
+  color: #ffffff;
+}
+
+.dark-green-btn:hover {
+  background-color: #123e17;
+}
+
+/* Fallback Mock UI Style for Vector Graphics */
+.mock-image-placeholder {
+  width: 100%;
+  max-width: 420px;
+  height: 220px;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed rgba(0, 0, 0, 0.08);
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.first-illustration { background: rgba(255, 255, 255, 0.6); }
+.second-illustration { background: #f9fafb; }
+.third-illustration { background: rgba(255, 255, 255, 0.6); }
+
+/* --- RESPONSIVE DESKTOP QUERY (min-width: 768px) --- */
+@media (min-width: 768px) {
+  .journey-row {
+    flex-direction: row; /* Converts into horizontally aligned layouts */
+    padding: 3.5rem 4rem;
+    gap: 4rem;
+  }
+  
+  /* Mirror alternates the middle row visually */
+  .journey-row.row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .journey-card-title {
+    font-size: 2rem;
+  }
+}
