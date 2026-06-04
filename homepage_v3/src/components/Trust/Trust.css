@@ -1,0 +1,191 @@
+/* ========================================
+   TRUST + FINAL CTA — Mobile First
+   ======================================== */
+
+.trust-section {
+  background-color: var(--color-section-alt);
+}
+
+/* Header */
+.trust-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .trust-header {
+    margin-bottom: var(--space-3xl);
+  }
+}
+
+.trust-mission {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-teal);
+  margin-top: var(--space-sm);
+  letter-spacing: -0.01em;
+}
+
+/* Trust Grid — always 2×2 */
+.trust-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+@media (min-width: 768px) {
+  .trust-grid {
+    gap: var(--space-lg);
+    margin-bottom: var(--space-3xl);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Trust Card */
+.trust-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  text-align: center;
+  transition: box-shadow var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+
+@media (min-width: 768px) {
+  .trust-card {
+    padding: var(--space-xl);
+  }
+}
+
+.trust-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.trust-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-sm);
+}
+
+@media (min-width: 768px) {
+  .trust-card-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: var(--space-md);
+  }
+}
+
+/* Per-card icon colors — brand-aligned palette */
+.trust-card--1 .trust-card-icon {
+  background-color: #e6f2ef;
+  color: #1a6b5a;
+}
+
+.trust-card--2 .trust-card-icon {
+  background-color: #edf5e4;
+  color: #5a8a3c;
+}
+
+.trust-card--3 .trust-card-icon {
+  background-color: #e4f0f5;
+  color: #2a7f9a;
+}
+
+.trust-card--4 .trust-card-icon {
+  background-color: #f0efe4;
+  color: #6b7a3d;
+}
+
+.trust-card-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.125rem;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .trust-card-label {
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-xs);
+  }
+}
+
+.trust-card-desc {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .trust-card-desc {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+}
+
+/* Final CTA Block */
+.trust-cta-block {
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+  background: linear-gradient(135deg, var(--color-teal-light) 0%, #e0f2e9 100%);
+  border-radius: var(--radius-xl);
+  border: 1px solid #c8e8cf;
+}
+
+@media (min-width: 768px) {
+  .trust-cta-block {
+    padding: var(--space-3xl) var(--space-4xl);
+  }
+}
+
+.trust-cta-text {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .trust-cta-text {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-xl);
+  }
+}
+
+.trust-cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+@media (min-width: 480px) {
+  .trust-cta-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.trust-cta-actions .btn {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .trust-cta-actions .btn {
+    width: auto;
+  }
+}
