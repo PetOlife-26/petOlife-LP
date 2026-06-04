@@ -20,11 +20,23 @@
 }
 
 .ba-image-wrapper {
-  border-radius: var(--radius-lg);
+  margin-left: calc(-1 * var(--space-lg));
+  margin-right: calc(-1 * var(--space-lg));
+  border-radius: 0;
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  border: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   background-color: var(--color-white);
+}
+
+@media (min-width: 768px) {
+  .ba-image-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+  }
 }
 
 .ba-image {
