@@ -181,3 +181,48 @@ export async function joinWaitlist(data) {
     };
   }
 }
+
+// ──────────────────────────────────────────────────────────
+//  4. REGISTRATION FORM (Vet / Pet Parent interest form)
+//     Used by: RegistrationModal
+//     Saves  : type="registration" row in Google Sheet
+//     Triggers: email notification to tech@petolife.com
+// ──────────────────────────────────────────────────────────
+/**
+ * @param {{ name: string, email: string, subject: string, message: string }} data
+ * @returns {Promise<{success: boolean, message: string}>}
+ */
+export async function submitRegistration(data) {
+  await delay(200);
+
+  const { name, email, subject, message } = data || {};
+
+  if (!name || name.trim().length < 2)
+    return { success: false, message: "Please enter your name." };
+  if (!email || !isValidEmail(email))
+    return { success: false, message: "Please enter a valid email address." };
+
+  try {
+    const result = await postToSheet({
+      type   : "registration",
+      name   : name.trim(),
+      email  : email.trim(),
+      subject: (subject || "Interest Form").trim(),
+      message: (message || "").trim(),
+      source : "petolife-registration-modal",
+    });
+
+    return {
+      success: result.success,
+      message: result.success
+        ? `You're registered, ${name.trim()}! We'll be in touch soon 🐾`
+        : result.message || "Something went wrong. Please try again.",
+    };
+  } catch (err) {
+    console.error("[submitRegistration]", err);
+    return {
+      success: false,
+      message: "Connection error. Please try again later.",
+    };
+  }
+}

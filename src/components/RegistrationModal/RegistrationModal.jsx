@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { submitContactForm } from '../../api/endpoints';
+import { submitRegistration } from '../../api/endpoints';
 import './RegistrationModal.css';
 
 const RegistrationModal = ({ isOpen, onClose, type }) => {
@@ -80,7 +80,7 @@ const RegistrationModal = ({ isOpen, onClose, type }) => {
       };
     }
 
-    const res = await submitContactForm(payload);
+    const res = await submitRegistration(payload);
     setLoading(false);
     setStatus({ msg: res.message, ok: res.success });
 

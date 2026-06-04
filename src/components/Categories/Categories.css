@@ -1,7 +1,3 @@
-/* ========================================
-   CATEGORIES (Who Is It For) — Mobile First
-   ======================================== */
-
 .categories-section {
   background-color: var(--color-bg);
   padding: var(--space-2xl) 0;
@@ -232,3 +228,4 @@
   color: var(--color-text-secondary);
   font-weight: 600;
 }
+

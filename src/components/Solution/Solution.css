@@ -1,7 +1,3 @@
-/* ========================================
-   SOLUTION — Mobile First, Always Horizontal
-   ======================================== */
-
 .solution-section {
   background-color: var(--color-section-alt);
 }
@@ -193,3 +189,4 @@
     height: 36px;
   }
 }
+

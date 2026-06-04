@@ -1,7 +1,3 @@
-/*
-   BEFORE vs AFTER — Mobile First
-*/
-
 .ba-section {
   background-color: var(--color-section-alt);
 }
@@ -44,3 +40,4 @@
   height: auto;
   display: block;
 }
+
