@@ -1,0 +1,34 @@
+/*
+   BEFORE vs AFTER — Mobile First
+*/
+
+.ba-section {
+  background-color: var(--color-section-alt);
+}
+
+.ba-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .ba-header {
+    margin-bottom: var(--space-1xl);
+  }
+}
+
+.ba-image-wrapper {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+}
+
+.ba-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}

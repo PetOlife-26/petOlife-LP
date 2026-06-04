@@ -1,0 +1,223 @@
+/* ========================================
+   NAVBAR — Mobile First
+   ======================================== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  transition: box-shadow var(--duration) var(--ease);
+}
+
+.navbar.scrolled {
+  box-shadow: var(--shadow-md);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+@media (min-width: 768px) {
+  .navbar-inner {
+    height: 72px;
+  }
+}
+
+/* Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.navbar-logo img {
+  height: 32px;
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .navbar-logo img {
+    height: 36px;
+  }
+}
+
+/* Desktop Nav Links */
+.navbar-nav {
+  display: none;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 1024px) {
+  .navbar-nav {
+    display: flex;
+  }
+}
+
+.navbar-nav a {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: color var(--duration) var(--ease);
+  position: relative;
+}
+
+.navbar-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-teal);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transition: transform var(--duration) var(--ease);
+}
+
+.navbar-nav a:hover {
+  color: var(--color-teal);
+}
+
+.navbar-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Desktop CTA */
+.navbar-cta {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .navbar-cta {
+    display: block;
+  }
+}
+
+.navbar-cta .btn {
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+}
+
+/* Mobile Hamburger */
+.navbar-hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  z-index: 1003;
+}
+
+@media (min-width: 1024px) {
+  .navbar-hamburger {
+    display: none;
+  }
+}
+
+.navbar-hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text-primary);
+  border-radius: 2px;
+  transition: all var(--duration) var(--ease);
+}
+
+.navbar-hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.navbar-hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ========================================
+   MOBILE MENU — Outside header element
+   ======================================== */
+
+/* Dark overlay behind menu */
+.navbar-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s var(--ease), visibility 0.3s;
+}
+
+.navbar-mobile-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (min-width: 1024px) {
+  .navbar-mobile-overlay {
+    display: none;
+  }
+}
+
+/* Mobile Menu Panel */
+.navbar-mobile {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 280px;
+  max-width: 85vw;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem var(--space-xl) var(--space-xl);
+  transform: translateX(100%);
+  transition: transform 0.35s var(--ease);
+  z-index: 1002;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-mobile.open {
+  transform: translateX(0);
+}
+
+@media (min-width: 1024px) {
+  .navbar-mobile {
+    display: none !important;
+  }
+}
+
+.navbar-mobile a {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+  transition: color var(--duration) var(--ease);
+}
+
+.navbar-mobile a:hover {
+  color: var(--color-teal);
+}
+
+.navbar-mobile .btn {
+  margin-top: auto;
+  width: 100%;
+}
