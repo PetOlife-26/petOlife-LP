@@ -46,8 +46,23 @@
 
 @media (min-width: 768px) {
   .hero-content {
-    flex: 1;
-    max-width: 540px;
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) minmax(360px, 1fr);
+    grid-template-rows: auto auto auto auto;
+    align-items: start;
+    gap: var(--space-3xl);
+    width: 100%;
+    max-width: none;
+  }
+
+  .hero-visual {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+    align-self: center;
+  }
+
+  .hero-content > :not(.hero-visual) {
+    grid-column: 2;
   }
 }
 
@@ -102,6 +117,7 @@
   align-items: center;
   gap: var(--space-sm);
   margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
   padding: var(--space-sm) var(--space-md);
   background: var(--color-white);
   border: 1px solid var(--color-border);
@@ -137,7 +153,7 @@
 
 @media (min-width: 768px) {
   .hero-visual {
-    flex: 1;
+    margin-bottom: 0;
   }
 }
 
