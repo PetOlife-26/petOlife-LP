@@ -1,3 +1,7 @@
+/* ========================================
+   FOOTER — Mobile First
+   ======================================== */
+
 .footer {
   position: relative;
   margin-top: 0;
@@ -197,4 +201,3 @@
 .footer-divider {
   color: rgba(255, 255, 255, 0.2);
 }
-
