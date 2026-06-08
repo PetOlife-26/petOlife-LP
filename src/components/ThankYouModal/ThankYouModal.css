@@ -1,0 +1,147 @@
+.thank-overlay {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+
+  padding: 20px;
+}
+
+.thank-modal {
+  background: white;
+
+  width: 100%;
+
+  max-width: 550px;
+
+  padding: 40px;
+
+  border-radius: 25px;
+
+  text-align: center;
+
+  position: relative;
+
+  animation: popup 0.3s ease;
+}
+
+@keyframes popup {
+  from {
+    opacity: 0;
+
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+}
+
+.close-btn {
+  position: absolute;
+
+  top: 20px;
+  right: 20px;
+
+  border: none;
+
+  background: none;
+
+  font-size: 2rem;
+
+  cursor: pointer;
+}
+
+.success-icon {
+  font-size: 4rem;
+
+  margin-bottom: 20px;
+}
+
+.thank-modal h2 {
+  color: #1b5f3a;
+
+  margin-bottom: 10px;
+}
+
+.thank-modal h4 {
+  color: #666;
+
+  margin-bottom: 25px;
+}
+
+.status-list {
+  text-align: left;
+
+  margin-bottom: 30px;
+
+  line-height: 2;
+}
+
+.social-buttons {
+  display: flex;
+
+  gap: 15px;
+
+  justify-content: center;
+
+  margin-bottom: 25px;
+
+  flex-wrap: wrap;
+}
+
+.social-buttons a {
+  text-decoration: none;
+
+  padding: 12px 20px;
+
+  background: #eaf9ef;
+
+  color: #1b5f3a;
+
+  border-radius: 12px;
+
+  font-weight: 600;
+}
+
+.home-btn {
+  background: #4caf50;
+
+  color: white;
+
+  border: none;
+
+  padding: 14px 30px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .thank-modal {
+    padding: 30px 20px;
+  }
+
+  .social-buttons {
+    flex-direction: column;
+  }
+}
