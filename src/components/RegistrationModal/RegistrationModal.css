@@ -1,3 +1,7 @@
+/*
+   MODAL — Mobile First
+*/
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -193,4 +197,3 @@
   margin-top: var(--space-sm);
   padding: 0.875rem;
 }
-

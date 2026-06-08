@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { submitRegistration } from '../../api/endpoints';
 import './RegistrationModal.css';
 
-const RegistrationModal = ({ isOpen, onClose, type }) => {
+const RegistrationModal = ({ isOpen, onClose, type, onRegisterSuccess }) => {
   const isVet = type === 'vet';
 
   // ── Vet form state ──────────────────────────────────────
@@ -84,9 +84,13 @@ const RegistrationModal = ({ isOpen, onClose, type }) => {
     setLoading(false);
     setStatus({ msg: res.message, ok: res.success });
 
-    // Auto close on success after 2 seconds
+    // Auto close on success and trigger thank you modal
     if (res.success) {
-      setTimeout(() => onClose(), 2000);
+      if (onRegisterSuccess) {
+        onRegisterSuccess(type);
+      } else {
+        setTimeout(() => onClose(), 2000);
+      }
     }
   };
 
