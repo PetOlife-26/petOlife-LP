@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { submitPetParentForm, submitVetForm } from '../../api/endpoints';
 import './RegistrationModal.css';
 
-const RegistrationModal = ({ isOpen, onClose, type }) => {
+const RegistrationModal = ({ isOpen, onClose, type, onRegisterSuccess }) => {
   const isVet = type === 'vet';
 
   const [vetData, setVetData] = useState({
@@ -48,38 +48,10 @@ const RegistrationModal = ({ isOpen, onClose, type }) => {
     setLoading(true);
     setStatus({ msg: '', ok: null });
 
-    let payload;
+    const res = isVet
+      ? await submitVetForm(vetData)
+      : await submitPetParentForm(parentData);
 
-    if (isVet) {
-      payload = {
-        name: vetData.doctorName,
-        email: vetData.email,
-        subject: 'Veterinarian Interest Form',
-        message:
-          `Type: Veterinarian\n` +
-          `Doctor Name: ${vetData.doctorName}\n` +
-          `Clinic: ${vetData.clinicName}\n` +
-          `Mobile: ${vetData.mobile}\n` +
-          `City: ${vetData.city}\n` +
-          `Early Access Interest: ${vetData.earlyAccess ? 'Yes' : 'No'}`,
-      };
-    } else {
-      payload = {
-        name: parentData.name,
-        email: parentData.email,
-        subject: 'Pet Parent Interest Form',
-        message:
-          `Type: Pet Parent\n` +
-          `Name: ${parentData.name}\n` +
-          `Mobile: ${parentData.mobile}\n` +
-          `City: ${parentData.city}\n` +
-          `Pet Type: ${parentData.petType}\n` +
-          `Already Has Pet: ${parentData.hasPet ? 'Yes' : 'No'}\n` +
-          `Early Access Interest: ${parentData.earlyAccess ? 'Yes' : 'No'}`,
-      };
-    }
-
-    const res = await submitRegistration(payload);
     setLoading(false);
     setStatus({ msg: res.message, ok: res.success });
 
