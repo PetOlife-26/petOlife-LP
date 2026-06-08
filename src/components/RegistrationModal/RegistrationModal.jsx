@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { submitRegistration } from '../../api/endpoints';
+import { submitPetParentForm, submitVetForm } from '../../api/endpoints';
 import './RegistrationModal.css';
 
-const RegistrationModal = ({ isOpen, onClose, type, onRegisterSuccess }) => {
+const RegistrationModal = ({ isOpen, onClose, type }) => {
   const isVet = type === 'vet';
 
-  // ── Vet form state ──────────────────────────────────────
   const [vetData, setVetData] = useState({
     doctorName: '',
     clinicName: '',
