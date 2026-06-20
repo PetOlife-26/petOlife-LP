@@ -10,7 +10,7 @@
 
 const CONFIG = {
   SHEET_NAME   : "Sheet1",
-  NOTIFY_EMAIL : "akash@petolife.com",
+  NOTIFY_EMAIL : "tech@petolife.com",
   SITE_NAME    : "PetOlife",
 };
 
