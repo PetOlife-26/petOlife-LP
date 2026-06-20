@@ -6,7 +6,7 @@ const ThankYouModal = ({ isOpen, onClose, type }) => {
     if (isOpen) {
       const timer = setTimeout(() => {
         onClose();
-      }, 8000);
+      }, 80000);
       return () => clearTimeout(timer);
     }
   }, [isOpen, onClose]);

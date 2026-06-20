@@ -7,6 +7,8 @@
 // ============================================================
 
 // ── Resolve the script URL from env (Vite) ─────────────────
+import { supabase } from './supabase';
+
 const GAS_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || "";
 
 if (!GAS_URL) {
@@ -42,6 +44,27 @@ export async function submitPetParentForm(data) {
     return { success: false, message: "Please select a pet type." };
 
   try {
+    // 1. Insert into Supabase
+    const { error: supabaseError } = await supabase
+      .from('pet_parents')
+      .insert([
+        {
+          name: name.trim(),
+          mobile: mobile.trim(),
+          email: email.trim(),
+          city: city.trim(),
+          pet_type: petType,
+          pet_name: petName ? petName.trim() : null,
+          has_pet: hasPet,
+          early_access: earlyAccess,
+        }
+      ]);
+
+    if (supabaseError) {
+      console.error("[Supabase Error]", supabaseError);
+    }
+
+    // 2. Post to Google Apps Script (Email automation)
     const res = await postToSheet({
       type       : "pet-parent",
       name       : name.trim(),
@@ -81,6 +104,25 @@ export async function submitVetForm(data) {
     return { success: false, message: "Please enter your city." };
 
   try {
+    // 1. Insert into Supabase
+    const { error: supabaseError } = await supabase
+      .from('vets')
+      .insert([
+        {
+          doctor_name: doctorName.trim(),
+          clinic_name: clinicName.trim(),
+          mobile: mobile.trim(),
+          email: email.trim(),
+          city: city.trim(),
+          early_access: earlyAccess,
+        }
+      ]);
+
+    if (supabaseError) {
+      console.error("[Supabase Error]", supabaseError);
+    }
+
+    // 2. Post to Google Apps Script (Email automation)
     const res = await postToSheet({
       type       : "vet",
       name       : doctorName.trim(),
