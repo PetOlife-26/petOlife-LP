@@ -28,7 +28,7 @@ async function postToSheet(payload) {
 
 // ── Pet Parent form ─────────────────────────────────────────
 export async function submitPetParentForm(data) {
-  const { name, mobile, email, city, petType, hasPet, earlyAccess } = data;
+  const { name, mobile, email, city, petType, petName, hasPet, earlyAccess } = data;
 
   if (!name || name.trim().length < 2)
     return { success: false, message: "Please enter your name." };
@@ -49,6 +49,7 @@ export async function submitPetParentForm(data) {
       email      : email.trim(),
       city       : city.trim(),
       extra      : petType,
+      petName    : petName ? petName.trim() : "",
       hasPet     : hasPet,
       earlyAccess: earlyAccess,
     });

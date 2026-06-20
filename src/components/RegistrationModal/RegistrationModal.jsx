@@ -21,6 +21,7 @@ const RegistrationModal = ({ isOpen, onClose, type, onRegisterSuccess }) => {
     email: '',
     city: '',
     petType: '',
+    petName: '',
     hasPet: true,
     earlyAccess: true,
   });
@@ -192,6 +193,15 @@ const RegistrationModal = ({ isOpen, onClose, type, onRegisterSuccess }) => {
                   required
                   value={parentData.city}
                   onChange={(e) => setParentData({ ...parentData, city: e.target.value })}
+                />
+              </div>
+              <div className="form-group">
+                <label>Pet Name</label>
+                <input
+                  type="text"
+                  placeholder="Bujji"
+                  value={parentData.petName}
+                  onChange={(e) => setParentData({ ...parentData, petName: e.target.value })}
                 />
               </div>
               <div className="form-group">
