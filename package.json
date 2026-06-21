@@ -2,6 +2,7 @@
   "name": "homepage_v3",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://PetOlife-26.github.io/petOlife-LP/",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,6 +19,6 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
     "gh-pages": "^6.3.0",
-    "vite": "^8.0.16"
+    "vite": "^5.2.0"
   }
 }

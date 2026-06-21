@@ -1,90 +1,54 @@
 // ============================================================
 //  PetOlife — Frontend API Layer
 //  File    : src/api/endpoints.js
-//  Author  : Akash M S  
-//  Purpose : All form/email submissions → Google Apps Script
-//            No backend server required for prototype phase.
+//  Purpose : All form submissions → Supabase only.
 // ============================================================
 
-// ── Resolve the script URL from env (Vite) ─────────────────
 import { supabase } from './supabase';
-
-const GAS_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || "";
-
-if (!GAS_URL) {
-  console.warn("[PetOlife] VITE_GOOGLE_SCRIPT_URL is not set.");
-}
-
-async function postToSheet(payload) {
-  if (!GAS_URL) return { success: false, message: "API endpoint not configured." };
-
-  const response = await fetch(GAS_URL, {
-    method : "POST",
-    headers: { "Content-Type": "text/plain" },
-    body   : JSON.stringify(payload),
-  });
-
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  return response.json();
-}
 
 // ── Pet Parent form ─────────────────────────────────────────
 export async function submitPetParentForm(data) {
   const { name, mobile, email, city, petType, petName, hasPet, earlyAccess } = data;
 
   if (!name || name.trim().length < 2)
-    return { success: false, message: "Please enter your name." };
+    return { success: false, message: 'Please enter your name.' };
   if (!mobile || mobile.trim().length < 6)
-    return { success: false, message: "Please enter your mobile number." };
+    return { success: false, message: 'Please enter your mobile number.' };
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    return { success: false, message: "Please enter a valid email." };
+    return { success: false, message: 'Please enter a valid email.' };
   if (!city || city.trim().length < 2)
-    return { success: false, message: "Please enter your city." };
+    return { success: false, message: 'Please enter your city.' };
   if (!petType)
-    return { success: false, message: "Please select a pet type." };
+    return { success: false, message: 'Please select a pet type.' };
+
+  if (!supabase)
+    return { success: false, message: 'Service unavailable. Please try again later.' };
 
   try {
-    // 1. Insert into Supabase
-    const { error: supabaseError } = await supabase
+    const { error } = await supabase
       .from('pet_parents')
       .insert([
         {
-          name: name.trim(),
-          mobile: mobile.trim(),
-          email: email.trim(),
-          city: city.trim(),
-          pet_type: petType,
-          pet_name: petName ? petName.trim() : null,
-          has_pet: hasPet,
+          name        : name.trim(),
+          mobile      : mobile.trim(),
+          email       : email.trim(),
+          city        : city.trim(),
+          pet_type    : petType,
+          pet_name    : petName ? petName.trim() : null,
+          has_pet     : hasPet,
           early_access: earlyAccess,
-        }
+        },
       ]);
 
-    if (supabaseError) {
-      console.error("[Supabase Error]", supabaseError);
+    if (error) {
+      console.error('[Supabase Error - pet_parents]', error);
+      return { success: false, message: 'Something went wrong. Please try again.' };
     }
 
-    // 2. Post to Google Apps Script (Email automation)
-    const res = await postToSheet({
-      type       : "pet-parent",
-      name       : name.trim(),
-      mobile     : mobile.trim(),
-      email      : email.trim(),
-      city       : city.trim(),
-      extra      : petType,
-      petName    : petName ? petName.trim() : "",
-      hasPet     : hasPet,
-      earlyAccess: earlyAccess,
-    });
-    return {
-      success: res.success,
-      message: res.success
-        ? `Thank you ${name.trim()}! We'll be in touch soon 🐾`
-        : res.message || "Something went wrong.",
-    };
+    return { success: true, message: `Thank you ${name.trim()}! We'll be in touch soon 🐾` };
   } catch (err) {
-    console.error("[submitPetParentForm]", err);
-    return { success: false, message: "Connection error. Please try again." };
+    console.error('[submitPetParentForm]', err);
+    return { success: false, message: 'Connection error. Please try again.' };
   }
 }
 
@@ -93,53 +57,41 @@ export async function submitVetForm(data) {
   const { doctorName, clinicName, mobile, email, city, earlyAccess } = data;
 
   if (!doctorName || doctorName.trim().length < 2)
-    return { success: false, message: "Please enter doctor name." };
+    return { success: false, message: 'Please enter doctor name.' };
   if (!clinicName || clinicName.trim().length < 2)
-    return { success: false, message: "Please enter clinic name." };
+    return { success: false, message: 'Please enter clinic name.' };
   if (!mobile || mobile.trim().length < 6)
-    return { success: false, message: "Please enter mobile number." };
+    return { success: false, message: 'Please enter mobile number.' };
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    return { success: false, message: "Please enter a valid email." };
+    return { success: false, message: 'Please enter a valid email.' };
   if (!city || city.trim().length < 2)
-    return { success: false, message: "Please enter your city." };
+    return { success: false, message: 'Please enter your city.' };
+
+  if (!supabase)
+    return { success: false, message: 'Service unavailable. Please try again later.' };
 
   try {
-    // 1. Insert into Supabase
-    const { error: supabaseError } = await supabase
+    const { error } = await supabase
       .from('vets')
       .insert([
         {
-          doctor_name: doctorName.trim(),
-          clinic_name: clinicName.trim(),
-          mobile: mobile.trim(),
-          email: email.trim(),
-          city: city.trim(),
+          doctor_name : doctorName.trim(),
+          clinic_name : clinicName.trim(),
+          mobile      : mobile.trim(),
+          email       : email.trim(),
+          city        : city.trim(),
           early_access: earlyAccess,
-        }
+        },
       ]);
 
-    if (supabaseError) {
-      console.error("[Supabase Error]", supabaseError);
+    if (error) {
+      console.error('[Supabase Error - vets]', error);
+      return { success: false, message: 'Something went wrong. Please try again.' };
     }
 
-    // 2. Post to Google Apps Script (Email automation)
-    const res = await postToSheet({
-      type       : "vet",
-      name       : doctorName.trim(),
-      mobile     : mobile.trim(),
-      email      : email.trim(),
-      city       : city.trim(),
-      extra      : clinicName.trim(),
-      earlyAccess: earlyAccess,
-    });
-    return {
-      success: res.success,
-      message: res.success
-        ? `Thank you Dr. ${doctorName.trim()}! We'll reach out soon 🐾`
-        : res.message || "Something went wrong.",
-    };
+    return { success: true, message: `Thank you Dr. ${doctorName.trim()}! We'll reach out soon 🐾` };
   } catch (err) {
-    console.error("[submitVetForm]", err);
-    return { success: false, message: "Connection error. Please try again." };
+    console.error('[submitVetForm]', err);
+    return { success: false, message: 'Connection error. Please try again.' };
   }
 }
