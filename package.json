@@ -2,7 +2,7 @@
   "name": "homepage_v3",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://PetOlife-26.github.io/petOlife-LP/",
+  "homepage": "https://www.petolife.com",
   "type": "module",
   "scripts": {
     "dev": "vite",
